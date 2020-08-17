@@ -28,14 +28,14 @@ export default function App() {
       const data2 = await response2.json()
       const pokeData = data2.results.map(p => <li onClick={()=> getPoke(p.url)}>{p.name}</li>)
       const poke = <div>
-                      <img src={data.sprites.front_default} />
+                      <img src={data.sprites.front_default} alt='pokemon'/>
                       <h3>{data.name}</h3>
+                      <p>Type: {data.types[0].type.name} {data.types.length > 1 ? '/' + data.types[1].type.name : null}</p>
                       <p>Height: {data.height}</p>
                       <p>Weight: {data.weight}</p>
                       <p>Base exp: {data.base_experience}</p>
                   </div>
       setState({displayPoke: true, pokeToDisplay: poke, pokemon: pokeData, isLoading: false})
-      console.log(data)
     } catch(er) {
       console.log(er)
     }
