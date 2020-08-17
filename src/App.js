@@ -30,7 +30,7 @@ export default function App() {
       const poke = <div>
                       <img src={data.sprites.front_default} alt='pokemon'/>
                       <h3>{data.name}</h3>
-                      <p>Type: {data.types[0].type.name} {data.types.length > 1 ? '/' + data.types[1].type.name : null}</p>
+                      <p>Type: {data.types[0].type.name}{data.types.length > 1 ? '/' + data.types[1].type.name : null}</p>
                       <p>Height: {data.height}</p>
                       <p>Weight: {data.weight}</p>
                       <p>Base exp: {data.base_experience}</p>
@@ -51,6 +51,7 @@ export default function App() {
     <div>
       <div>
         {state.displayPoke ? state.pokeToDisplay : <h2>Click a poke to learn more!</h2>}
+        {state.isLoading ? <p>Loading....</p> : null}
       </div>
       <ul>
         {state.pokemon}
