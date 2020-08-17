@@ -1,37 +1,58 @@
-import React, {useState, useEffect} from 'react';
-import './App.css';
+import React, { useState, useEffect} from 'react'
+import './App.css'
 
 export default function App() {
-  const[state, setState] = useState({
-    names: [],
-    isLoading: true
+  const [state, setState] = useState({
+    isLoading: true,
+    pokemon: [],
+    displayPoke: false,
+    pokeToDisplay: null
   })
 
-  const fetchData = async () => {
+  const getData = async () => {
     try {
-      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=150`)
-      const json = await response.json()
-      const res = []
-      for (let poke of json.results) {
-        res.push(<li>{poke.name}</li>)
-      }
-      setState({names: res, isLoading: false})
-    } catch(e) {
-      console.log(e)
+      const response = await fetch('https://pokeapi.co/api/v2/pokemon/?limit=150')
+      const data = await response.json()
+      const pokeData = data.results.map(p => <li onClick={()=> getPoke(p.url)}>{p.name}</li>)
+      setState({pokemon: pokeData, isLoading: false})
+    } catch(er) {
+      console.log(er)
+    }
+  }
+
+  const getPoke = async (url) => {
+    try {
+      const response = await fetch(`${url}`)
+      const data = await response.json()
+      const response2 = await fetch('https://pokeapi.co/api/v2/pokemon/?limit=150')
+      const data2 = await response2.json()
+      const pokeData = data2.results.map(p => <li onClick={()=> getPoke(p.url)}>{p.name}</li>)
+      const poke = <div>
+                      <img src={data.sprites.front_default} />
+                      <h3>{data.name}</h3>
+                  </div>
+      setState({displayPoke: true, pokeToDisplay: poke, pokemon: pokeData, isLoading: false})
+      console.log(state)
+    } catch(er) {
+      console.log(er)
     }
   }
 
   useEffect(()=> {
     if (state.isLoading) {
-      fetchData()
+      getData()
     }
   })
 
   return (
     <div>
+      <div>
+        {state.displayPoke ? state.pokeToDisplay : <h2>Click a poke to learn more!</h2>}
+      </div>
       <ul>
-        {state.names}
+        {state.pokemon}
       </ul>
     </div>
   )
+
 }

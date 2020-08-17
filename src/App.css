@@ -1,0 +1,28 @@
+div {
+  margin: auto;
+  width: 1300px;
+  text-align: center;
+}
+
+ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+li {
+  margin: 2px;
+  padding: 10px;
+  height: 30px;
+  width: 100px;
+  background-color: blue;
+  color: white;
+  border-radius: 3px;
+}
+
+li:hover {
+  background-color: lightblue;
+  transition: ease all .4sec;
+}
