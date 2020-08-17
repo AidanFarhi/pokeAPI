@@ -30,9 +30,12 @@ export default function App() {
       const poke = <div>
                       <img src={data.sprites.front_default} />
                       <h3>{data.name}</h3>
+                      <p>Height: {data.height}</p>
+                      <p>Weight: {data.weight}</p>
+                      <p>Base exp: {data.base_experience}</p>
                   </div>
       setState({displayPoke: true, pokeToDisplay: poke, pokemon: pokeData, isLoading: false})
-      console.log(state)
+      console.log(data)
     } catch(er) {
       console.log(er)
     }
